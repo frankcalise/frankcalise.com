@@ -1,6 +1,4 @@
 import React from 'react';
-import { graphql } from 'gatsby';
-
 import Link from '../components/Link';
 import Layout from '../components/Layout';
 
@@ -46,7 +44,7 @@ const CategoryList = ({ postsByCategories }) => (
 
 export default function Categories({ data: { site }, pageContext }) {
   return (
-    <Layout site={site}>
+    <Layout>
       {pageContext.category ? (
         <CategoryItem {...pageContext} />
       ) : (
@@ -55,11 +53,3 @@ export default function Categories({ data: { site }, pageContext }) {
     </Layout>
   );
 }
-
-export const pageQuery = graphql`
-  query {
-    site {
-      ...site
-    }
-  }
-`;

@@ -5,7 +5,7 @@ module.exports = {
   pathPrefix: "/",
   siteMetadata: {
     siteUrl: "https://www.frankcalise.com/",
-    author: "Frank Cailse",
+    author: "Frank Calise",
     title: "The personal website of Frank Calise",
     description:
       "Thoughts on becoming a better software engineer and bodybuilder.",

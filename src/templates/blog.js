@@ -18,7 +18,7 @@ const Categories = ({ categories }) => (
 );
 
 const Blog = ({
-  data: { site, allMdx },
+  data: { allMdx },
   pageContext: { pagination, categories },
 }) => {
   const { page, nextPagePath, previousPagePath } = pagination;
@@ -28,7 +28,7 @@ const Blog = ({
   );
 
   return (
-    <Layout site={site}>
+    <Layout>
       <div>
         All categories on the blog:{' '}
         <Categories categories={categories} />
@@ -82,9 +82,6 @@ export default Blog;
 
 export const pageQuery = graphql`
   query {
-    site {
-      ...site
-    }
     allMdx {
       edges {
         node {

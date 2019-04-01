@@ -1,6 +1,6 @@
 import React, { Fragment } from "react"
 import Helmet from "react-helmet"
-import { graphql, Link } from "gatsby"
+import { graphql, Link, StaticQuery  } from "gatsby"
 import { MDXProvider } from "@mdx-js/tag"
 import { createGlobalStyle } from "styled-components"
 
@@ -46,17 +46,18 @@ const ListLink = props => (
   </li>
 )
 
-function Layout({ site, frontmatter = {}, children }) {
+function Layout({ data, frontmatter = {}, children }) {
   const {
-    siteMetadata: { description: siteDescription, keywords: siteKeywords },
-  } = site
-
-  console.log(site)
+    site: {
+      siteMetadata,
+      siteMetadata: { description: siteDescription, keywords: siteKeywords },
+    }
+  } = data
 
   const {
     keywords = siteKeywords,
     description = siteDescription,
-    title = "Frank Calise",
+    title = siteMetadata.title
   } = frontmatter
 
   return (
@@ -90,15 +91,21 @@ function Layout({ site, frontmatter = {}, children }) {
   )
 }
 
-export default Layout
-
-export const pageQuery = graphql`
-  fragment site on Site {
-    siteMetadata {
-      title
-      description
-      author
-      keywords
-    }
-  }
-`
+export default function LayoutWithSiteData(props) {
+  return (
+    <StaticQuery
+      query={graphql`
+        {
+          site {
+            siteMetadata {
+              title
+              description
+              keywords
+            }
+          }
+        }
+      `}
+      render={data => <Layout data={data} {...props} />}
+    />
+  )
+}
