@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React from "react"
 import Helmet from "react-helmet"
 import { graphql, Link, StaticQuery  } from "gatsby"
 import { MDXProvider } from "@mdx-js/tag"
@@ -61,7 +61,7 @@ function Layout({ data, frontmatter = {}, children }) {
   } = frontmatter
 
   return (
-    <Fragment>
+    <div style={{ margin: `3rem auto`, maxWidth: 650, padding: `0 1rem` }}>
       <Helmet
         title={title}
         meta={[
@@ -75,7 +75,7 @@ function Layout({ data, frontmatter = {}, children }) {
       <div>
         <header style={{ marginBottom: `1.5rem` }}>
           <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>
-            <h3 style={{ display: `inline` }}>Frank Cailse</h3>
+            <h3 style={{ display: `inline` }}>Frank Calise</h3>
           </Link>
           <ul style={{ listStyle: `none`, float: `right` }}>
             {NAVIGATION.map(navigation => (
@@ -87,7 +87,7 @@ function Layout({ data, frontmatter = {}, children }) {
         </header>
         <MDXProvider components={mdxComponents}>{children}</MDXProvider>
       </div>
-    </Fragment>
+    </div>
   )
 }
 
