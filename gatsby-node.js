@@ -1,5 +1,5 @@
 const path = require("path")
-const createFilePath = require("gatsby-source-filesystem")
+const {createFilePath} = require("gatsby-source-filesystem")
 
 const PAGINATION_OFFSET = 2
 

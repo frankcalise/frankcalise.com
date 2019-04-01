@@ -1,26 +1,31 @@
 import React from "react"
 import { graphql } from "gatsby"
-import MDXRenderer from "gatsby-mdx/mdx-renderer"
 import Layout from "../components/Layout"
 
-const MarkdownPage = ({ data: { site }, children, frontmatter }) => {
-  console.log(data)
-  console.log(site)
-  console.log(children)
-  return (
-    <Layout site={site} frontmatter={frontmatter}>
-      <MDXRenderer>{children}</MDXRenderer>
-    </Layout>
-  )
+export default function MarkdownPage({children }) {
+  const site = {
+    siteMetadata: {
+      siteUrl: "https://www.frankcalise.com/",
+      author: "Frank Cailse",
+      title: "The personal website of Frank Calise",
+      description:
+        "Thoughts on becoming a better software engineer and bodybuilder.",
+      keywords: ["Software Engineer", "Bodybuilder"],
+    },
+  }
+  return <Layout site={site}>{children}</Layout>
 }
-
-export default MarkdownPage
 
 export const pageQuery = graphql`
   query {
     site {
-      ...site
+      siteMetadata {
+        siteUrl
+        author
+        title
+        description
+        keywords
+      }
     }
   }
-`;
-
+`

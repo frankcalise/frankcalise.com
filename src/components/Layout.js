@@ -46,20 +46,18 @@ const ListLink = props => (
   </li>
 )
 
-export default ({ site, frontmatter = {}, children }) => {
+function Layout({ site, frontmatter = {}, children }) {
   const {
-    title,
-    description: siteDescription,
-    keywords: siteKeywords,
-  } = site.siteMetadata
+    siteMetadata: { description: siteDescription, keywords: siteKeywords },
+  } = site
+
+  console.log(site)
 
   const {
-    keywords: frontmatterKeywords,
-    description: frontmatterDescription,
+    keywords = siteKeywords,
+    description = siteDescription,
+    title = "Frank Calise",
   } = frontmatter
-
-  const keywords = (frontmatterKeywords || siteKeywords).join(", ")
-  const description = frontmatterDescription || siteDescription
 
   return (
     <Fragment>
@@ -67,35 +65,32 @@ export default ({ site, frontmatter = {}, children }) => {
         title={title}
         meta={[
           { name: "description", content: description },
-          { name: "keywords", content: keywords },
+          { name: "keywords", content: keywords.join() },
         ]}
       >
         <html lang="en" />
       </Helmet>
 
-      <MDXProvider components={mdxComponents}>
-        <Fragment>
-          <header style={{ marginBottom: `1.5rem` }}>
-            <Link
-              to="/"
-              style={{ textShadow: `none`, backgroundImage: `none` }}
-            >
-              <h3 style={{ display: `inline` }}>Frank Cailse</h3>
-            </Link>
-            <ul style={{ listStyle: `none`, float: `right` }}>
-              {NAVIGATION.map(navigation => (
-                <ListLink key={navigation.to} to={navigation.to}>
-                  {navigation.label}
-                </ListLink>
-              ))}
-            </ul>
-          </header>
-          {children}
-        </Fragment>
-      </MDXProvider>
+      <div>
+        <header style={{ marginBottom: `1.5rem` }}>
+          <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>
+            <h3 style={{ display: `inline` }}>Frank Cailse</h3>
+          </Link>
+          <ul style={{ listStyle: `none`, float: `right` }}>
+            {NAVIGATION.map(navigation => (
+              <ListLink key={navigation.to} to={navigation.to}>
+                {navigation.label}
+              </ListLink>
+            ))}
+          </ul>
+        </header>
+        <MDXProvider components={mdxComponents}>{children}</MDXProvider>
+      </div>
     </Fragment>
   )
 }
+
+export default Layout
 
 export const pageQuery = graphql`
   fragment site on Site {
