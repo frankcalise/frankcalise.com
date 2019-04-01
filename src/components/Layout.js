@@ -1,13 +1,13 @@
-import React, { Fragment } from 'react';
-import Helmet from 'react-helmet';
-import { graphql } from 'gatsby';
-import { MDXProvider } from '@mdx-js/tag';
-import { createGlobalStyle } from 'styled-components';
+import React, { Fragment } from "react"
+import Helmet from "react-helmet"
+import { graphql, Link } from "gatsby"
+import { MDXProvider } from "@mdx-js/tag"
+import { createGlobalStyle } from "styled-components"
 
-import 'prismjs/themes/prism-okaidia.css';
+import "prismjs/themes/prism-okaidia.css"
 
-import Link from './Link';
-import mdxComponents from './mdx';
+// import Link from "./Link"
+import mdxComponents from "./mdx"
 
 createGlobalStyle`
   html, body {
@@ -16,7 +16,7 @@ createGlobalStyle`
   }
 
   ${() => {
-    /* Override PrismJS Defaults */ return null;
+    /* Override PrismJS Defaults */ return null
   }}
 
   pre {
@@ -33,36 +33,41 @@ createGlobalStyle`
     padding-right: 1em;
     padding-left: 1em;
   }
-`;
+`
 
 const NAVIGATION = [
-  { to: '/', label: 'Home' },
-  { to: '/about', label: 'About' },
-  { to: '/blog', label: 'Blog' },
-];
+  { to: "/about", label: "About" },
+  { to: "/blog", label: "Blog" },
+]
+
+const ListLink = props => (
+  <li style={{ display: `inline-block`, marginRight: `1rem` }}>
+    <Link to={props.to}>{props.children}</Link>
+  </li>
+)
 
 export default ({ site, frontmatter = {}, children }) => {
   const {
     title,
     description: siteDescription,
     keywords: siteKeywords,
-  } = site.siteMetadata;
+  } = site.siteMetadata
 
   const {
     keywords: frontmatterKeywords,
     description: frontmatterDescription,
-  } = frontmatter;
+  } = frontmatter
 
-  const keywords = (frontmatterKeywords || siteKeywords).join(', ');
-  const description = frontmatterDescription || siteDescription;
+  const keywords = (frontmatterKeywords || siteKeywords).join(", ")
+  const description = frontmatterDescription || siteDescription
 
   return (
     <Fragment>
       <Helmet
         title={title}
         meta={[
-          { name: 'description', content: description },
-          { name: 'keywords', content: keywords },
+          { name: "description", content: description },
+          { name: "keywords", content: keywords },
         ]}
       >
         <html lang="en" />
@@ -70,20 +75,27 @@ export default ({ site, frontmatter = {}, children }) => {
 
       <MDXProvider components={mdxComponents}>
         <Fragment>
-          <ul>
-            {NAVIGATION.map(navigation => (
-              <li key={navigation.label}>
-                <Link to={navigation.to}>{navigation.label}</Link>
-              </li>
-            ))}
-          </ul>
-
+          <header style={{ marginBottom: `1.5rem` }}>
+            <Link
+              to="/"
+              style={{ textShadow: `none`, backgroundImage: `none` }}
+            >
+              <h3 style={{ display: `inline` }}>Frank Cailse</h3>
+            </Link>
+            <ul style={{ listStyle: `none`, float: `right` }}>
+              {NAVIGATION.map(navigation => (
+                <ListLink key={navigation.to} to={navigation.to}>
+                  {navigation.label}
+                </ListLink>
+              ))}
+            </ul>
+          </header>
           {children}
         </Fragment>
       </MDXProvider>
     </Fragment>
-  );
-};
+  )
+}
 
 export const pageQuery = graphql`
   fragment site on Site {
@@ -94,4 +106,4 @@ export const pageQuery = graphql`
       keywords
     }
   }
-`;
+`

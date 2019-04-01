@@ -1,3 +1,6 @@
+const path = require('path')
+const here = (...p) => path.join(__dirname, ...p)
+
 module.exports = {
   pathPrefix: "/",
   siteMetadata: {
@@ -19,7 +22,7 @@ module.exports = {
     {
       resolve: `gatsby-mdx`,
       options: {
-        extensions: [".mdx", ".md"],
+        extensions: [".mdx", ".md", '.markdown'],
         gatsbyRemarkPlugins: [
           {
             resolve: "gatsby-remark-images",
