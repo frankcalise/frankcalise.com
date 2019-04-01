@@ -1,6 +1,7 @@
 import React from "react"
 import Helmet from "react-helmet"
-import { graphql, Link, StaticQuery  } from "gatsby"
+import { graphql, Link, StaticQuery } from "gatsby"
+import { css } from "@emotion/core"
 import { MDXProvider } from "@mdx-js/tag"
 import { createGlobalStyle } from "styled-components"
 
@@ -42,7 +43,20 @@ const NAVIGATION = [
 
 const ListLink = props => (
   <li style={{ display: `inline-block`, marginRight: `1rem` }}>
-    <Link to={props.to}>{props.children}</Link>
+    <Link
+      css={css`
+        color: black;
+        text-decoration: none;
+        padding: 5px;
+        &:hover {
+          color: white;
+          background-color: #448aff;
+        }
+      `}
+      to={props.to}
+    >
+      {props.children}
+    </Link>
   </li>
 )
 
@@ -51,13 +65,13 @@ function Layout({ data, frontmatter = {}, children }) {
     site: {
       siteMetadata,
       siteMetadata: { description: siteDescription, keywords: siteKeywords },
-    }
+    },
   } = data
 
   const {
     keywords = siteKeywords,
     description = siteDescription,
-    title = siteMetadata.title
+    title = siteMetadata.title,
   } = frontmatter
 
   return (
