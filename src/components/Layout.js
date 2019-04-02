@@ -1,9 +1,9 @@
 import React from "react"
 import Helmet from "react-helmet"
-import { graphql, Link, StaticQuery } from "gatsby"
-import { css } from "@emotion/core"
+import { graphql, StaticQuery } from "gatsby"
 import { MDXProvider } from "@mdx-js/tag"
 import { createGlobalStyle } from "styled-components"
+import Header from './Header'
 
 import "prismjs/themes/prism-okaidia.css"
 
@@ -36,30 +36,6 @@ createGlobalStyle`
   }
 `
 
-const NAVIGATION = [
-  { to: "/about", label: "About" },
-  { to: "/blog", label: "Blog" },
-]
-
-const ListLink = props => (
-  <li style={{ display: `inline-block`, marginRight: `1rem` }}>
-    <Link
-      css={css`
-        color: black;
-        text-decoration: none;
-        padding: 5px;
-        &:hover {
-          color: white;
-          background-color: #448aff;
-        }
-      `}
-      to={props.to}
-    >
-      {props.children}
-    </Link>
-  </li>
-)
-
 function Layout({ data, frontmatter = {}, children }) {
   const {
     site: {
@@ -87,18 +63,7 @@ function Layout({ data, frontmatter = {}, children }) {
       </Helmet>
 
       <div>
-        <header style={{ marginBottom: `1.5rem` }}>
-          <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>
-            <h3 style={{ display: `inline` }}>Frank Calise</h3>
-          </Link>
-          <ul style={{ listStyle: `none`, float: `right` }}>
-            {NAVIGATION.map(navigation => (
-              <ListLink key={navigation.to} to={navigation.to}>
-                {navigation.label}
-              </ListLink>
-            ))}
-          </ul>
-        </header>
+        <Header />
         <MDXProvider components={mdxComponents}>{children}</MDXProvider>
       </div>
     </div>
