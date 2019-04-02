@@ -65,35 +65,51 @@ function MobileNav({ color = "white" }) {
             }
           `}
         />
-        <Link
-          css={css`
-            color: black;
-            text-decoration: none;
-            padding: 5px;
-            &:hover {
-              color: white;
-              background-color: #448aff;
-            }
-          `}
-          to="/about"
-        >
-          About
-        </Link>
-        <Link
-          css={css`
-            color: black;
-            text-decoration: none;
-            padding: 5px;
-            &:hover {
-              color: white;
-              background-color: #448aff;
-            }
-          `}
-          to="/blog"
-        >
-          Blog
-        </Link>
       </button>
+      {toggleOpen && (
+        <div
+          css={css`
+            position: absolute;
+            z-index: 20;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: #448aff;
+          `}
+        >
+          <Link
+            css={css`
+              color: white;
+              text-decoration: none;
+              padding: 5px;
+              &:hover {
+                color: white;
+                background: rgba(0, 0, 0, 0.2);
+              }
+            `}
+            to="/about"
+          >
+            About
+          </Link>
+          <Link
+            css={css`
+              color: white;
+              text-decoration: none;
+              padding: 5px;
+              &:hover {
+                color: white;
+                background: rgba(0, 0, 0, 0.2);
+              }
+            `}
+            to="/blog"
+          >
+            Blog
+          </Link>
+        </div>
+      )}
     </div>
   )
 }
