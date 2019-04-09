@@ -1,5 +1,5 @@
 const path = require("path")
-const {createFilePath} = require("gatsby-source-filesystem")
+const { createFilePath } = require("gatsby-source-filesystem")
 
 const PAGINATION_OFFSET = 2
 
@@ -16,31 +16,31 @@ const pluckCategories = edges =>
     }, {}),
   )
 
-const groupByCategory = edges =>
-  edges.reduce((acc, value) => {
-    value.node.fields.categories.forEach(category => {
-      if (!acc[category]) {
-        acc[category] = []
-      }
-      acc[category].push(value)
-    })
-    return acc
-  }, {})
+// const groupByCategory = edges =>
+//   edges.reduce((acc, value) => {
+//     value.node.fields.categories.forEach(category => {
+//       if (!acc[category]) {
+//         acc[category] = []
+//       }
+//       acc[category].push(value)
+//     })
+//     return acc
+//   }, {})
 
-const createCategoryPages = (createPage, edges) => {
-  const categories = pluckCategories(edges)
+// const createCategoryPages = (createPage, edges) => {
+//   const categories = pluckCategories(edges) || []
 
-  const posts = groupByCategory(edges)
+//   const posts = groupByCategory(edges)
 
-  Object.keys(posts).forEach(category => {
-    createPaginatedPages(
-      createPage,
-      posts[category],
-      `/categories/${category}`,
-      { categories, activeCategory: category },
-    )
-  })
-}
+//   Object.keys(posts).forEach(category => {
+//     createPaginatedPages(
+//       createPage,
+//       posts[category],
+//       `/categories/${category}`,
+//       { categories, activeCategory: category },
+//     )
+//   })
+// }
 
 const createPosts = (createPage, edges) => {
   edges.forEach(({ node }, i) => {
@@ -60,9 +60,9 @@ const createPosts = (createPage, edges) => {
 }
 
 const createBlog = (createPage, edges) => {
-  const categories = pluckCategories(edges)
+  // const categories = pluckCategories(edges)
 
-  createPaginatedPages(createPage, edges, "/blog", { categories })
+  createPaginatedPages(createPage, edges, "/blog")
 }
 
 const createPaginatedPages = (createPage, edges, pathPrefix, context) => {
@@ -94,7 +94,7 @@ const createPaginatedPages = (createPage, edges, pathPrefix, context) => {
           pageCount: pages.length,
           pathPrefix,
         },
-        ...context,
+        // ...context,
       },
     })
   })
@@ -111,7 +111,6 @@ exports.createPages = ({ actions, graphql }) =>
             fields {
               title
               slug
-              categories
             }
             code {
               scope
@@ -129,7 +128,7 @@ exports.createPages = ({ actions, graphql }) =>
 
     createBlog(actions.createPage, edges)
     createPosts(actions.createPage, edges)
-    createCategoryPages(actions.createPage, edges)
+    // createCategoryPages(actions.createPage, edges)
   })
 
 exports.onCreateWebpackConfig = ({ actions }) => {

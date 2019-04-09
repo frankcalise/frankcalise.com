@@ -1,22 +1,43 @@
-import React from 'react';
-import GatsbyLink from 'gatsby-link';
+import React from "react"
+import { css } from "@emotion/core"
+import GatsbyLink from "gatsby-link"
 
 const Link = ({ children, to, ...other }) => {
-  const internal = /^\/(?!\/)/.test(to);
+  const internal = /^\/(?!\/)/.test(to)
 
   if (internal) {
     return (
-      <GatsbyLink to={to} {...other}>
+      <GatsbyLink
+        css={css`
+          color: blue;
+          text-decoration: none;
+          &:hover {
+            text-decoration: underline;
+          }
+        `}
+        to={to}
+        {...other}
+      >
         {children}
       </GatsbyLink>
-    );
+    )
   }
 
   return (
-    <a href={to} {...other}>
+    <a
+      css={css`
+        color: blue;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      `}
+      href={to}
+      {...other}
+    >
       {children}
     </a>
-  );
-};
+  )
+}
 
-export default Link;
+export default Link

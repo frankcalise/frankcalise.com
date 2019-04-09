@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require("path")
 const here = (...p) => path.join(__dirname, ...p)
 
 module.exports = {
@@ -23,9 +23,9 @@ module.exports = {
       resolve: `gatsby-mdx`,
       options: {
         defaultLayouts: {
-          default: here('./src/templates/markdown-page.js'),
+          default: here("./src/templates/markdown-page.js"),
         },
-        extensions: [".mdx", ".md", '.markdown'],
+        extensions: [".mdx", ".md", ".markdown"],
         gatsbyRemarkPlugins: [
           {
             resolve: "gatsby-remark-images",
@@ -68,5 +68,11 @@ module.exports = {
       },
     },
     "gatsby-plugin-offline",
+    {
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography`,
+      },
+    },
   ],
 }

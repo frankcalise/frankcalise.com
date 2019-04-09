@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
+import Link from './Link'
 import { css } from "@emotion/core"
 import MobileNav from "./MobileNav"
 import { screenSmallMax } from "../utils/media"
@@ -9,15 +9,37 @@ const NAVIGATION = [
   { to: "/blog", label: "Blog" },
 ]
 
+// const StyledLink = props => (
+//   <Link
+//     css={css`
+//       color: black;
+//       text-decoration: none;
+//       &:hover {
+//         text-decoration: underline;
+//       }
+//     `}
+//     to={props.to}
+//   >
+//     {props.children}
+//   </Link>
+// )
+
 const ListLink = props => (
   <Link
     css={css`
       color: black;
+      padding-bottom: 6px;
+      margin-right: 40px;
+      border-bottom: solid 4px rgba(255, 255, 255, 0);
+      transition: all 175ms cubic-bezier(0.65, 0.05, 0.36, 1);
       text-decoration: none;
-      padding: 5px;
       &:hover {
-        color: white;
-        background-color: #448aff;
+        text-decoration: none;
+        padding-bottom: 4px;
+        border-bottom: 4px solid #448aff;
+      }
+      &:last-child {
+        margin-right: 0px;
       }
       ${screenSmallMax} {
         display: none;
@@ -46,7 +68,7 @@ const Header = () => (
         alignItems: "center",
       }}
     >
-      <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>
+      <Link to="/">
         <h3 style={{ display: `inline` }}>Frank Calise</h3>
       </Link>
       <div

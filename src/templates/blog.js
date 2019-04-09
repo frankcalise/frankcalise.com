@@ -1,21 +1,9 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
 
 import Layout from '../components/Layout';
 import Link from '../components/Link';
-
-const Categories = ({ categories }) => (
-  <Fragment>
-    <ul>
-      {categories.map(category => (
-        <li key={category}>
-          <Link to={`/categories/${category}`}>{category}</Link>
-        </li>
-      ))}
-    </ul>
-  </Fragment>
-);
 
 const Blog = ({
   data: { allMdx },
@@ -29,11 +17,6 @@ const Blog = ({
 
   return (
     <Layout>
-      <div>
-        All categories on the blog:{' '}
-        <Categories categories={categories} />
-      </div>
-
       {posts.map(({ node: post }) => (
         <div key={post.id}>
           {post.frontmatter.banner && (
@@ -48,8 +31,6 @@ const Blog = ({
             </Link>
           </h2>
 
-          <small>{post.frontmatter.date}</small>
-
           <p>{post.excerpt}</p>
 
           <Link to={post.frontmatter.slug}>Continue Reading</Link>
@@ -59,17 +40,16 @@ const Blog = ({
       <hr />
 
       <div>
-        Pagination:
         <ul>
           {nextPagePath && (
             <li>
-              <Link to={nextPagePath}>Next Page</Link>
+              <Link to={nextPagePath}>Next</Link>
             </li>
           )}
 
           {previousPagePath && (
             <li>
-              <Link to={previousPagePath}>Previous Page</Link>
+              <Link to={previousPagePath}>Previous</Link>
             </li>
           )}
         </ul>
@@ -98,7 +78,6 @@ export const pageQuery = graphql`
               }
             }
             slug
-            categories
             keywords
           }
         }
