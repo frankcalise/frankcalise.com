@@ -18,6 +18,9 @@ export const globalStyles = css`
     border-radius: 4px;
     font-size: 14px;
   }
+  pre, code {
+    font-family: "PragmataPro", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
 `
 
 function Layout({ data, frontmatter = {}, children }) {
