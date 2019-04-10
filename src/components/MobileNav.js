@@ -66,7 +66,7 @@ function MobileNav({ color = "white" }) {
           `}
         />
       </button>
-      {toggleOpen && (
+      {isOpen && (
         <div
           css={css`
             position: absolute;
