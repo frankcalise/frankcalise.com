@@ -1,17 +1,15 @@
 import Typography from "typography"
+import "../fonts/fonts.css"
+
+export const fonts = {
+  regular: "PragmataPro",
+}
 
 const typography = new Typography({
   baseFontSize: "18px",
   baseLineHeight: 1.666,
-  headerFontFamily: [
-    "Avenir Next",
-    "Helvetica Neue",
-    "Segoe UI",
-    "Helvetica",
-    "Arial",
-    "sans-serif",
-  ],
-  bodyFontFamily: ["Georgia", "serif"],
+  headerFontFamily: [fonts.regular, "sans-serif"],
+  bodyFontFamily: [fonts.regular, "sans-serif"],
 })
 
 export default typography
