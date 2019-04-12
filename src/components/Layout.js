@@ -5,7 +5,9 @@ import { MDXProvider } from "@mdx-js/tag"
 import { Global, css } from "@emotion/core"
 import Header from "./Header"
 import mdxComponents from "./mdx"
+import { fonts } from "../utils/typography"
 
+import '../fonts/fonts.css'
 import "../themes/material-darker-theme.css"
 
 export const globalStyles = css`
@@ -18,8 +20,10 @@ export const globalStyles = css`
     border-radius: 4px;
     font-size: 14px;
   }
-  pre, code {
-    font-family: "PragmataPro", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  pre,
+  code {
+    font-family: ${fonts.regular}, SFMono-Regular, Menlo, Monaco, Consolas,
+      "Liberation Mono", "Courier New", monospace;
   }
 `
 
