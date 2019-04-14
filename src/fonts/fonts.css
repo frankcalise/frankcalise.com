@@ -2,6 +2,6 @@
   font-family: PragmataPro;
   font-style: normal;
   font-weight: 100;
-  src: url("PragmataPro.ttf") format("ttf"),
-    url("PragmataPro.ttf") format("ttf");
+  src: url("PragmataPro.ttf") format("truetype"),
+    url("PragmataPro.ttf") format("truetype");
 }
