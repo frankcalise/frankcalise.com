@@ -15,6 +15,7 @@ function MobileNav({ color = "white" }) {
         onClick={toggleOpen}
         aria-label={`${isOpen ? "Close nav menu" : "Open nav menu"}`}
         css={css`
+          padding-right: 16px;
           z-index: 30;
           top: -5px;
           position: relative;
