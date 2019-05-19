@@ -11,7 +11,7 @@ import Link from "$components/Link";
 
 ## Overview
 
-Have you ever wanted to level up an application by allowing users to collaborate on live data together or notifying them of data changes in realtime? With a standard REST backend implementation, the user would have to refresh the page to fetch the latest or you could implement polling. In this post we'll explore how to support this in a React application in a way that scales efficiently. 
+Have you ever wanted to level up an application by allowing users to collaborate on live data together or notifying them of data changes in realtime? With a standard REST backend implementation, the user would have to refresh the page to fetch the latest or you could implement polling. In this post we'll explore how to support this in a React application in a way that scales efficiently.
 
 ## Polling
 
@@ -27,28 +27,156 @@ Enter websockets, where a persistent connection is created between the client an
 
 ## Pusher Basics
 
-Most Pusher tutorials (and I believe Socket.IO but am not as familiar with the implementation) will have you connect to the socket in `componentDidMount`. Then you subscribe to your channel, which you can think of as a chat room of where certain messages will be sent to. Your component can join any number of channels using the same or different websocket connection. Then you set up your event handlers for a channel to do your updates, probably setting new state, for certain events. Your application will rerender right in front of the user, no timer, no manual refresh. Pretty simple, right? And it works.
+Most Pusher tutorials (and I believe Socket.IO but am not as familiar with the implementation) will have you connect to the socket in `componentDidMount`. Then you subscribe to your channel, which you can think of as a chat room of where certain messages will be sent to. Your component can join any number of channels using the same or different websocket connection. Then you set up your event handlers for a channel to do your updates, probably setting new state, for certain events. Your application will re-render right in front of the user, no timer, no manual refresh. Pretty simple, right? And it works. Use the Debug Console pictured below to send your listening client some realtime messages.
 
 ```javascript
-componentDidMount() {}
+// src/PusherExample.js
+import React from "react";
+import Pusher from "pusher-js";
+
+export default class PusherExample extends React.Component {
+  state = {
+    messages: []
+  };
+
+  componentDidMount() {
+    // Replace APP_KEY and APP_CLUSTER with your Pusher app specific keys
+    this.pusher = new Pusher("APP_KEY", {
+      cluster: "APP_CLUSTER",
+      encrypted: true
+    });
+
+    this.channel = this.pusher.subscribe("my-channel");
+
+    this.channel.bind("message", this.messageEventHandler);
+  }
+
+  componentWillUnmount() {
+    this.channel.unbind();
+    this.pusher.unsubscribe(this.channel);
+    this.pusher.disconnect();
+  }
+
+  messageEventHandler = data => {
+    this.setState({ messages: [...this.state.messages, data.payload] });
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <header>
+          <h1>Welcome to React-Pusher Chat</h1>
+        </header>
+        <ul>
+          {this.state.messages.map((msg, index) => (
+            <li key={`msg-${index}`}>{msg}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+}
+
 ```
 
-Alright so we have data flying in realtime, but how does this scale in a large application? Let's say we have three silos in our Todo app, pending, in progress and completed. You might have three separate components for the sake of this tutorial. It wouldn't be necessary to open three Pusher connections for this one user. And if the user is me, who has a browser tab problem, he or she will have several of them open. Now what, 2 tabs, 3 connections per, you're up to 6, when in reality the client can listen to multiple channels (or single channel and multiple event names, however you want to slice it) using a single websocket connection. This can be achieved with React's [Context API](https://reactjs.org/docs/context.html).
+![Pusher Debug Console](./images/pusher_debug_console.png)
+
+Alright so we have data flying in realtime, but how does this scale in a large application? Let's say we have three silos in a Todo app - pending, in progress and completed. You might have three separate components for the sake of this tutorial. It wouldn't be necessary to open three Pusher connections for this one user. And if the user is me, who has a browser tab problem, he or she will have several of them open. Now what, 2 tabs, 3 connections per, you're up to 6, when in reality the client can listen to multiple channels (or single channel and multiple event names, however you want to slice it) using a single websocket connection. This can be achieved with React's [Context API](https://reactjs.org/docs/context.html).
 
 ## Single Pusher Connection with React Context
 
 If you're not familiar with Context, you should read Kent C. Dodd's post, [Application State Management with React](https://kentcdodds.com/blog/application-state-management-with-react) to get a good handle on how you can share state across components. We can reuse our Pusher connection by creating a PusherProvider around our application component. The Pusher object is created once during the initialization of the app and passed into the context as the default value.
 
-```javascript
-<PusherPovider />
+```jsx
+// src/App.js
+import React from "react";
+import Pusher from "pusher-js";
+import { PUSHER_CONFIG } from "./config/pusher.config";
+import "./App.css";
+import { PusherProvider } from "./PusherContext";
+import { Child } from "./Child";
+
+// Enable pusher logging - don't include this in production
+Pusher.logToConsole = true;
+
+// Set up pusher instance with main channel subscription
+// Be able to subscribe to the same channel in another component
+// with separate callback but utilizing the existing connection
+const pusher = new Pusher(PUSHER_CONFIG.key, {
+  cluster: PUSHER_CONFIG.cluster,
+  forceTLS: true
+});
+
+function App() {
+  return (
+    <PusherProvider pusher={pusher}>
+      <div className="App">
+        <header className="App-header">Context API w/ Pusher real-time</header>
+        <main className="App-main">
+          <span>Put some main component here</span>
+          <Child />
+        </main>
+      </div>
+    </PusherProvider>
+  );
+}
+
+export default App;
 ```
 
-Now some child component can subscribe to a channel using the already open Pusher connection. Setup and cleanup your event handlers as you normally would. Now you're user is down to a single connection, which goes a long way for our Sandbox plan!
+```jsx
+// src/Child.js
+import React from "react";
+import { usePusher } from "./PusherContext";
+
+function Child() {
+  // Use the pusher hook to get the pusher instance from context
+  const pusher = usePusher();
+  const [messages, setMessages] = React.useState([]);
+
+  // Set up the side effect, each time a message comes in
+  // on the child-channel with an event type 'child-event',
+  // add the payload to the messages array
+  React.useEffect(() => {
+    function messageEventHandler(data) {
+      const newMessages = [...messages, data.payload];
+      setMessages(newMessages);
+    }
+
+    const channel = pusher.subscribe("my-channel");
+    channel.bind("message", messageEventHandler);
+
+    return () => {
+      channel.unbind("message", messageEventHandler);
+    };
+  }, [messages, pusher]);
+
+  // Render the messages down below
+  return (
+    <div className="child">
+      <span>
+        A child component here, using a pusher connection initialized in some
+        parent!
+      </span>
+      <ul>
+        {messages.map((msg, index) => (
+          <li key={`child-event-${index}`}>{msg}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export { Child };
+```
+
+
+Now some child component can subscribe to a channel using the already open Pusher connection. Setup and cleanup your event handlers as you normally would. Now you're user is down to a single connection, which goes a long way for our Sandbox plan! You can see more details at the [example repository](https://github.com/frankcalise/react-context-pusher).
 
 ## Further Enhancements
 
-So how else can we improve this implementation? We can combine Context with useReducer so a feature made up of related components can react to our data streaming in realtime. I'll save that topic as a follow up to this post. 
+So how else can we improve this implementation? We can combine Context with useReducer so a feature made up of related components can react to our data streaming in realtime. I'll save that topic as a follow up to this post.
 
 Another feature to look into would be using a shared worker, which can use a single connection per browser window! Even better than one per tab. Pusher has a [blog post](https://blog.pusher.com/reduce-websocket-connections-with-shared-workers/) about this implementation if this interests you.
 
-Hopefully this post gives you a little more insight to implemtning realtime functionality in a large scale React application.
+Hopefully this post gives you a little more insight to implementing realtime functionality in a large scale React application.
