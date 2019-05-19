@@ -31,7 +31,7 @@ const Blog = ({
             </Link>
           </h2>
 
-          <p>{post.excerpt}</p>
+          <p>{post.frontmatter.description}</p>
 
           <Link to={post.frontmatter.slug}>Continue Reading</Link>
         </div>
@@ -70,6 +70,7 @@ export const pageQuery = graphql`
           frontmatter {
             title
             date(formatString: "MMMM DD, YYYY")
+            description
             banner {
               childImageSharp {
                 sizes(maxWidth: 720) {
