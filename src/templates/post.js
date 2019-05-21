@@ -6,7 +6,7 @@ import MDXRenderer from "gatsby-mdx/mdx-renderer"
 import Markdown from "react-markdown"
 import { screenSmallMax } from "../utils/media"
 import Layout from "../components/Layout"
-import Share from "components/share"
+import Share from "components/Share"
 
 export default function Post({ data: { mdx } }) {
   const {

@@ -1,8 +1,8 @@
-import React from 'react'
-import {css} from '@emotion/core'
-import {TwitterShareButton} from 'react-share'
+import React from "react"
+import { css } from "@emotion/core"
+import { TwitterShareButton } from "react-share"
 
-const Share = ({url, title, twitterHandle}) => (
+const Share = ({ url, title, twitterHandle }) => (
   <div
     css={css`
       display: flex;
@@ -34,7 +34,7 @@ const Share = ({url, title, twitterHandle}) => (
     <TwitterShareButton
       url={url}
       title={title}
-      via={twitterHandle.split('@').join('')}
+      via={twitterHandle.split("@").join("")}
     >
       Twitter
     </TwitterShareButton>
