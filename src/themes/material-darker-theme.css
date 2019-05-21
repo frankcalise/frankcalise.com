@@ -5,6 +5,22 @@
  * MaterialTheme (https://github.com/equinusocio/vsc-material-theme)
  */
 
+/* line numbers */
+.gatsby-highlight {
+  background-color: #2b2b2b;
+  border-radius: 0.3em;
+  margin: 0.5em 0;
+  padding: 0.5em;
+  overflow: auto;
+}
+
+.gatsby-highlight pre[class*="language-j"].line-numbers {
+  padding: 0;
+  padding-left: 2.8em;
+  overflow: initial;
+}
+
+ /* inline single tick mark code */
  code[class="language-text"] {
   color: rgb(34, 36, 38);
   padding: 2px 4px;
@@ -65,7 +81,7 @@ pre[class*="language-j"] {
 }
 
 /* Inline code */
-:not(pre) > code[class*="language-j"] {
+:not(pre) > code[class*="language-text"] {
   padding: 0.1em;
   border-radius: 0.3em;
 }

@@ -9,6 +9,7 @@ import { fonts } from "../utils/typography"
 
 import '../fonts/fonts.css'
 import "../themes/material-darker-theme.css"
+import "prismjs/plugins/line-numbers/prism-line-numbers.css"
 
 export const globalStyles = css`
   html,
