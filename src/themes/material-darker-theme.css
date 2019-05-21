@@ -5,8 +5,18 @@
  * MaterialTheme (https://github.com/equinusocio/vsc-material-theme)
  */
 
-code[class*="language-"],
-pre[class*="language-"] {
+ code[class="language-text"] {
+  color: rgb(34, 36, 38);
+  padding: 2px 4px;
+  background: rgb(244, 243, 250);
+  border-radius: 3px;
+  font-size: 0.85rem;
+  line-height: 1.55rem;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+ }
+
+code[class*="language-j"],
+pre[class*="language-j"] {
   color: #EEFFFF;
   font-family: "PragmataPro";
   direction: ltr;
@@ -26,36 +36,36 @@ pre[class*="language-"] {
   hyphens: none;
 }
 
-pre[class*="language-"]::-moz-selection,
-pre[class*="language-"] ::-moz-selection,
-code[class*="language-"]::-moz-selection,
-code[class*="language-"] ::-moz-selection {
+pre[class*="language-j"]::-moz-selection,
+pre[class*="language-j"] ::-moz-selection,
+code[class*="language-j"]::-moz-selection,
+code[class*="language-j"] ::-moz-selection {
   color: inherit;
   background: rgba(33, 66, 131, 0.85);
 }
 
-pre[class*="language-"]::selection,
-pre[class*="language-"] ::selection,
-code[class*="language-"]::selection,
-code[class*="language-"] ::selection {
+pre[class*="language-j"]::selection,
+pre[class*="language-j"] ::selection,
+code[class*="language-j"]::selection,
+code[class*="language-j"] ::selection {
   color: inherit;
   background: rgba(33, 66, 131, 0.85);
 }
 
 /* Code blocks */
-pre[class*="language-"] {
+pre[class*="language-j"] {
   padding: 1em;
   margin: 0.5em 0;
   overflow: auto;
 }
 
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
+:not(pre) > code[class*="language-j"],
+pre[class*="language-j"] {
   background: #2b2b2b;
 }
 
 /* Inline code */
-:not(pre) > code[class*="language-"] {
+:not(pre) > code[class*="language-j"] {
   padding: 0.1em;
   border-radius: 0.3em;
 }
