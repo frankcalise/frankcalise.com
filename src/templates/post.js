@@ -6,7 +6,7 @@ import MDXRenderer from "gatsby-mdx/mdx-renderer"
 import Markdown from "react-markdown"
 import { screenSmallMax } from "../utils/media"
 import Layout from "../components/Layout"
-// import Link from "../components/Link"
+import Share from "components/share"
 
 export default function Post({ data: { mdx } }) {
   const {
@@ -18,7 +18,7 @@ export default function Post({ data: { mdx } }) {
     description,
   } = mdx.frontmatter
 
-  const blogPostUrl = `https://www.frankcalise.com/${slug}`
+  const blogPostUrl = `https://www.frankcalise.com${slug}`
 
   return (
     <Layout frontmatter={mdx.frontmatter}>
@@ -82,10 +82,15 @@ export default function Post({ data: { mdx } }) {
           >
             Discuss on Twitter
           </a>
-          {/* <span css={{ marginLeft: 10, marginRight: 10 }}>{` • `}</span> */}
-          {/* <a target="_blank" rel="noopener noreferrer" href={editLink}>
-            Edit post on GitHub
-          </a> */}
+        </p>
+      </div>
+      <div>
+        <p css={{ textAlign: "right" }}>
+          <Share
+            url={blogPostUrl}
+            title={title}
+            twitterHandle={"@frankcalise"}
+          />
         </p>
       </div>
     </Layout>
