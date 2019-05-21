@@ -15,6 +15,7 @@ export const globalStyles = css`
   body {
     margin: 0;
     padding: 0;
+    background-color: #EFEFEF;
   }
   pre {
     border-radius: 4px;
