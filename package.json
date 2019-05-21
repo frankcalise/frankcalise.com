@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-mdx-blog-starter-project",
-  "description": "Gatsby MDX Blog Starter Project",
+  "name": "frankcalise.com",
+  "description": "Frank's personal website",
   "version": "1.0.0",
-  "author": "Robin Wieruch <hello@rwieruch.com> (https://www.robinwieruch.de/)",
-  "repository": "https://github.com/rwieruch/gatsby-mdx-starter-project",
+  "author": "Frank Calise <fcalise@gmail.com> (https://www.frankcalise.com/)",
+  "repository": "https://github.com/frankcalise/frankcalise.com",
   "dependencies": {
     "@emotion/core": "^10.0.10",
     "@emotion/styled": "^10.0.10",
@@ -37,6 +37,8 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
+    "react-markdown": "^4.0.8",
+    "react-share": "^3.0.0",
     "react-typography": "^0.16.19",
     "styled-components": "^4.1.3",
     "typography": "^0.16.19",

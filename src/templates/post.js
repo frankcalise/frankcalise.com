@@ -3,12 +3,23 @@ import { css } from "@emotion/core"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import MDXRenderer from "gatsby-mdx/mdx-renderer"
-
+import Markdown from "react-markdown"
+import { screenSmallMax } from "../utils/media"
 import Layout from "../components/Layout"
-import Link from "../components/Link"
+// import Link from "../components/Link"
 
-export default function Post({ data: { mdx }, pageContext: { next, prev } }) {
-  const { title, date, banner } = mdx.frontmatter
+export default function Post({ data: { mdx } }) {
+  const {
+    title,
+    date,
+    banner,
+    bannerCredit,
+    slug,
+    description,
+  } = mdx.frontmatter
+
+  const blogPostUrl = `https://www.frankcalise.com/${slug}`
+
   return (
     <Layout frontmatter={mdx.frontmatter}>
       <h1
@@ -38,21 +49,44 @@ export default function Post({ data: { mdx }, pageContext: { next, prev } }) {
       >
         {date && <h3>{date}</h3>}
       </div>
-      {banner && <Img sizes={banner.childImageSharp.sizes} alt={``} />}
-
+      {banner && (
+        <div
+          css={css`
+            text-align: center;
+            p {
+              margin-bottom: 0;
+            }
+            ${screenSmallMax} {
+              padding: 0;
+            }
+          `}
+        >
+          <Img sizes={banner.childImageSharp.sizes} alt={``} />
+          {bannerCredit ? <Markdown>{bannerCredit}</Markdown> : null}
+        </div>
+      )}
+      <br />
+      {description ? <Markdown>{description}</Markdown> : null}
       <MDXRenderer>{mdx.code.body}</MDXRenderer>
 
       <div>
-        {prev && (
-          <span>
-            Previous <Link to={prev.fields.slug}>{prev.fields.title}</Link>
-          </span>
-        )}
-        {next && (
-          <span>
-            Next <Link to={next.fields.slug}>{next.fields.title}</Link>
-          </span>
-        )}
+        <p css={{ textAlign: "right" }}>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            // using mobile.twitter.com because if people haven't upgraded
+            // to the new experience, the regular URL wont work for them
+            href={`https://mobile.twitter.com/search?q=${encodeURIComponent(
+              blogPostUrl,
+            )}`}
+          >
+            Discuss on Twitter
+          </a>
+          {/* <span css={{ marginLeft: 10, marginRight: 10 }}>{` • `}</span> */}
+          {/* <a target="_blank" rel="noopener noreferrer" href={editLink}>
+            Edit post on GitHub
+          </a> */}
+        </p>
       </div>
     </Layout>
   )
@@ -63,6 +97,7 @@ export const pageQuery = graphql`
     mdx(fields: { id: { eq: $id } }) {
       frontmatter {
         title
+        description
         date(formatString: "MMMM DD, YYYY")
         banner {
           childImageSharp {
@@ -71,6 +106,7 @@ export const pageQuery = graphql`
             }
           }
         }
+        bannerCredit
         slug
         keywords
       }

@@ -7,4 +7,5 @@ export default styled.h2`
   margin-bottom: 20px;
   font-weight: 900;
   line-height: 1.1;
+  font-family: sans-serif;
 `;

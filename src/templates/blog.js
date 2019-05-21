@@ -1,34 +1,22 @@
-import React from 'react';
-import { graphql } from 'gatsby';
-import Img from 'gatsby-image';
-
-import Layout from '../components/Layout';
-import Link from '../components/Link';
+import React from "react"
+import { graphql } from "gatsby"
+import Layout from "../components/Layout"
+import Link from "../components/Link"
 
 const Blog = ({
   data: { allMdx },
   pageContext: { pagination, categories },
 }) => {
-  const { page, nextPagePath, previousPagePath } = pagination;
+  const { page, nextPagePath, previousPagePath } = pagination
 
-  const posts = page.map(id =>
-    allMdx.edges.find(edge => edge.node.id === id),
-  );
+  const posts = page.map(id => allMdx.edges.find(edge => edge.node.id === id))
 
   return (
     <Layout>
       {posts.map(({ node: post }) => (
         <div key={post.id}>
-          {post.frontmatter.banner && (
-            <Img
-              sizes={post.frontmatter.banner.childImageSharp.sizes}
-            />
-          )}
-
           <h2>
-            <Link to={post.frontmatter.slug}>
-              {post.frontmatter.title}
-            </Link>
+            <Link to={post.frontmatter.slug}>{post.frontmatter.title}</Link>
           </h2>
 
           <p>{post.excerpt}</p>
@@ -55,10 +43,10 @@ const Blog = ({
         </ul>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default Blog;
+export default Blog
 
 export const pageQuery = graphql`
   query {
@@ -70,6 +58,7 @@ export const pageQuery = graphql`
           frontmatter {
             title
             date(formatString: "MMMM DD, YYYY")
+            description
             banner {
               childImageSharp {
                 sizes(maxWidth: 720) {
@@ -84,4 +73,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
