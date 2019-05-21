@@ -9,7 +9,7 @@ const Link = ({ children, to, ...other }) => {
     return (
       <GatsbyLink
         css={css`
-          color: blue;
+          color: #448aff;
           text-decoration: none;
           &:hover {
             text-decoration: underline;
@@ -26,7 +26,7 @@ const Link = ({ children, to, ...other }) => {
   return (
     <a
       css={css`
-        color: blue;
+        color: #448aff;
         text-decoration: none;
         &:hover {
           text-decoration: underline;

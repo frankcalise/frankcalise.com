@@ -77,38 +77,51 @@ function MobileNav({ color = "white" }) {
             width: 100vw;
             height: 100vh;
             display: flex;
+
             align-items: center;
             background: #448aff;
           `}
         >
-          <Link
+          <div
             css={css`
-              color: white;
-              text-decoration: none;
-              padding: 5px;
-              &:hover {
-                color: white;
-                background: rgba(0, 0, 0, 0.2);
-              }
+              font-size: 24px;
+              justify-content: space-evenly;
+              margin: 0px auto;
+              width: 100%;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
             `}
-            to="/about"
           >
-            About
-          </Link>
-          <Link
-            css={css`
-              color: white;
-              text-decoration: none;
-              padding: 5px;
-              &:hover {
+            <Link
+              css={css`
                 color: white;
-                background: rgba(0, 0, 0, 0.2);
-              }
-            `}
-            to="/blog"
-          >
-            Blog
-          </Link>
+                text-decoration: none;
+                padding: 5px;
+                &:hover {
+                  color: white;
+                  background: rgba(0, 0, 0, 0.2);
+                }
+              `}
+              to="/blog"
+            >
+              Blog
+            </Link>
+            <Link
+              css={css`
+                color: white;
+                text-decoration: none;
+                padding: 5px;
+                &:hover {
+                  color: white;
+                  background: rgba(0, 0, 0, 0.2);
+                }
+              `}
+              to="/about"
+            >
+              About
+            </Link>
+          </div>
         </div>
       )}
     </div>

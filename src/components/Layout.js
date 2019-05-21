@@ -25,6 +25,13 @@ export const globalStyles = css`
     font-family: ${fonts.regular}, SFMono-Regular, Menlo, Monaco, Consolas,
       "Liberation Mono", "Courier New", monospace;
   }
+  a {
+    color: #448aff;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `
 
 function Layout({ data, frontmatter = {}, children }) {
