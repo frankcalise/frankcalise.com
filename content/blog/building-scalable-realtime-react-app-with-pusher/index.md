@@ -22,7 +22,7 @@ Enter websockets, where a persistent connection is created between the client an
 
 ## Getting Started
 
-[Sign up](https://dashboard.pusher.com/accounts/sign_up) to Pusher (they make it simple via GitHub). They'll walk you through setting up your first Channels app, generating your App Keys, giving you some example JavaScript to use and get you access to the debug console. The console will allow us to send server messages to listening clients without building and deploying a backend. Install `pusher-js` as a dependency to your project and you're ready to build your first realtime component.
+[Sign up](https://dashboard.pusher.com/accounts/sign_up) to Pusher (they make it simple via GitHub). They'll walk you through setting up your first Channels app, generating your App Keys, giving you some example JavaScript to use and get you access to the debug console. The console will allow us to send server messages to listening clients without building and deploying a backend. Install Pusher via `npm install --save pusher-js` as a dependency to your project and you're ready to build your first realtime component.
 
 ## Pusher Basics
 
