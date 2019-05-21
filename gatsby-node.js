@@ -188,6 +188,12 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     })
 
     createNodeField({
+      name: "bannerCredit",
+      node,
+      banner: node.frontmatter.bannerCredit,
+    })
+
+    createNodeField({
       name: "categories",
       node,
       value: node.frontmatter.categories || [],
@@ -197,6 +203,15 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       name: "keywords",
       node,
       value: node.frontmatter.keywords || [],
+    })
+
+    createNodeField({
+      name: "editLink",
+      node,
+      value: `https://github.com/frankcalise/frankcalise.com/edit/master${node.fileAbsolutePath.replace(
+        __dirname,
+        "",
+      )}`,
     })
   }
 }

@@ -5,9 +5,8 @@ title: "Building a Scalable React App with Pusher"
 description: "_How to create a realtime application while being mindful of the number of Pusher connections used with React Context._"
 keywords: ["react", "javascript", "context", "pusher", "realtime", "websockets"]
 banner: "./images/banner.jpg"
+bannerCredit: "Photo by [Carrie Friesen](http://carriefriesenphotography.com/)"
 ---
-
-import Link from "$components/Link";
 
 ## Overview
 
@@ -31,35 +30,35 @@ Most Pusher tutorials (and I believe Socket.IO but am not as familiar with the i
 
 ```javascript
 // src/PusherExample.js
-import React from "react";
-import Pusher from "pusher-js";
+import React from "react"
+import Pusher from "pusher-js"
 
 export default class PusherExample extends React.Component {
   state = {
-    messages: []
-  };
+    messages: [],
+  }
 
   componentDidMount() {
     // Replace APP_KEY and APP_CLUSTER with your Pusher app specific keys
     this.pusher = new Pusher("APP_KEY", {
       cluster: "APP_CLUSTER",
-      encrypted: true
-    });
+      encrypted: true,
+    })
 
-    this.channel = this.pusher.subscribe("my-channel");
+    this.channel = this.pusher.subscribe("my-channel")
 
-    this.channel.bind("message", this.messageEventHandler);
+    this.channel.bind("message", this.messageEventHandler)
   }
 
   componentWillUnmount() {
-    this.channel.unbind();
-    this.pusher.unsubscribe(this.channel);
-    this.pusher.disconnect();
+    this.channel.unbind()
+    this.pusher.unsubscribe(this.channel)
+    this.pusher.disconnect()
   }
 
   messageEventHandler = data => {
-    this.setState({ messages: [...this.state.messages, data.payload] });
-  };
+    this.setState({ messages: [...this.state.messages, data.payload] })
+  }
 
   render() {
     return (
@@ -73,10 +72,9 @@ export default class PusherExample extends React.Component {
           ))}
         </ul>
       </div>
-    );
+    )
   }
 }
-
 ```
 
 ![Pusher Debug Console](./images/pusher_debug_console.png)
@@ -89,23 +87,23 @@ If you're not familiar with Context, you should read Kent C. Dodd's post, [Appli
 
 ```jsx
 // src/App.js
-import React from "react";
-import Pusher from "pusher-js";
-import { PUSHER_CONFIG } from "./config/pusher.config";
-import "./App.css";
-import { PusherProvider } from "./PusherContext";
-import { Child } from "./Child";
+import React from "react"
+import Pusher from "pusher-js"
+import { PUSHER_CONFIG } from "./config/pusher.config"
+import "./App.css"
+import { PusherProvider } from "./PusherContext"
+import { Child } from "./Child"
 
 // Enable pusher logging - don't include this in production
-Pusher.logToConsole = true;
+Pusher.logToConsole = true
 
 // Set up pusher instance with main channel subscription
 // Be able to subscribe to the same channel in another component
 // with separate callback but utilizing the existing connection
 const pusher = new Pusher(PUSHER_CONFIG.key, {
   cluster: PUSHER_CONFIG.cluster,
-  forceTLS: true
-});
+  forceTLS: true,
+})
 
 function App() {
   return (
@@ -118,38 +116,41 @@ function App() {
         </main>
       </div>
     </PusherProvider>
-  );
+  )
 }
 
-export default App;
+export default App
 ```
 
 ```jsx
 // src/Child.js
-import React from "react";
-import { usePusher } from "./PusherContext";
+import React from "react"
+import { usePusher } from "./PusherContext"
 
 function Child() {
   // Use the pusher hook to get the pusher instance from context
-  const pusher = usePusher();
-  const [messages, setMessages] = React.useState([]);
+  const pusher = usePusher()
+  const [messages, setMessages] = React.useState([])
 
   // Set up the side effect, each time a message comes in
   // on the child-channel with an event type 'child-event',
   // add the payload to the messages array
-  React.useEffect(() => {
-    function messageEventHandler(data) {
-      const newMessages = [...messages, data.payload];
-      setMessages(newMessages);
-    }
+  React.useEffect(
+    () => {
+      function messageEventHandler(data) {
+        const newMessages = [...messages, data.payload]
+        setMessages(newMessages)
+      }
 
-    const channel = pusher.subscribe("my-channel");
-    channel.bind("message", messageEventHandler);
+      const channel = pusher.subscribe("my-channel")
+      channel.bind("message", messageEventHandler)
 
-    return () => {
-      channel.unbind("message", messageEventHandler);
-    };
-  }, [messages, pusher]);
+      return () => {
+        channel.unbind("message", messageEventHandler)
+      }
+    },
+    [messages, pusher],
+  )
 
   // Render the messages down below
   return (
@@ -164,12 +165,11 @@ function Child() {
         ))}
       </ul>
     </div>
-  );
+  )
 }
 
-export { Child };
+export { Child }
 ```
-
 
 Now some child component can subscribe to a channel using the already open Pusher connection. Setup and cleanup your event handlers as you normally would. Now you're user is down to a single connection, which goes a long way for our Sandbox plan! You can see more details at the [example repository](https://github.com/frankcalise/react-context-pusher).
 
