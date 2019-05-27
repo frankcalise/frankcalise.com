@@ -3,10 +3,20 @@ import Link from "./Link"
 import { css } from "@emotion/core"
 import MobileNav from "./MobileNav"
 import { screenSmallMax } from "../utils/media"
+import {
+  FaTwitch,
+  FaTwitter,
+  FaLinkedin,
+  FaGithubAlt,
+} from "react-icons/fa"
 
 const NAVIGATION = [
   { to: "/blog", label: "Blog" },
-  { to: "/about", label: "About" },
+  { to:'/about', label: 'About'},
+  { to: "https://twitter.com/frankcalise", label: <FaTwitter /> },
+  { to: "https://github.com/frankcalise", label: <FaGithubAlt /> },
+  { to: "https://twitch.tv/frankcalise", label: <FaTwitch /> },
+  { to: "https://linkedin.com/in/frankcalise", label: <FaLinkedin /> },
 ]
 
 const ListLink = props => (
