@@ -1,6 +1,14 @@
 import React from "react"
 import { css } from "@emotion/core"
 import { Link } from "gatsby"
+import { FaTwitch, FaTwitter, FaLinkedin, FaGithubAlt } from "react-icons/fa"
+
+const NAVIGATION = [
+  { to: "https://twitter.com/frankcalise", label: <FaTwitter /> },
+  { to: "https://github.com/frankcalise", label: <FaGithubAlt /> },
+  { to: "https://twitch.tv/frankcalise", label: <FaTwitch /> },
+  { to: "https://linkedin.com/in/frankcalise", label: <FaLinkedin /> },
+]
 
 function MobileNav({ color = "white" }) {
   const [isOpen, setIsOpen] = React.useState(false)
@@ -121,6 +129,35 @@ function MobileNav({ color = "white" }) {
             >
               About
             </Link>
+            <div
+              css={css`
+                font-size: 24px;
+                justify-content: space-evenly;
+                margin: 25px;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+              `}
+            >
+              {NAVIGATION.map((item, index) => (
+                <a
+                  key={index}
+                  css={css`
+                    color: white;
+                    text-decoration: none;
+                    padding: 5px;
+                    &:hover {
+                      color: white;
+                      background: rgba(0, 0, 0, 0.2);
+                    }
+                  `}
+                  href={item.to}
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       )}
