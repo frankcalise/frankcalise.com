@@ -43,6 +43,9 @@ module.exports = {
               aliases: {},
             },
           },
+          {
+            resolve: `gatsby-remark-embedder`,
+          },
         ],
       },
     },
