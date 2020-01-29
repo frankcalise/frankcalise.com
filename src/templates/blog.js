@@ -2,6 +2,7 @@ import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/Layout"
 import Link from "../components/Link"
+import SEO from "../components/SEO"
 
 const Blog = ({
   data: { allMdx },
@@ -13,6 +14,7 @@ const Blog = ({
 
   return (
     <Layout>
+      <SEO title={`Blog`} />
       {posts.map(({ node: post }) => (
         <div key={post.id}>
           <h2>
