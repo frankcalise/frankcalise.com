@@ -7,6 +7,7 @@ import Markdown from "react-markdown"
 import { screenSmallMax } from "../utils/media"
 import Layout from "../components/Layout"
 import Share from "components/Share"
+import SEO from "../components/SEO"
 
 export default function Post({ data: { mdx } }) {
   const {
@@ -22,6 +23,7 @@ export default function Post({ data: { mdx } }) {
 
   return (
     <Layout frontmatter={mdx.frontmatter}>
+      <SEO title={title} />
       <h1
         css={css`
           text-align: center;
