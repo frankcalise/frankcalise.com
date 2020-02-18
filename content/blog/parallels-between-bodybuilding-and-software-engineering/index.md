@@ -10,4 +10,8 @@ bannerCredit: "Photo by [Carrie Friesen](http://carriefriesenphotography.com/)"
 
 ## Overview
 
-Start the post here!
+Began with software at a young age
+Got into rugby after first software job ended
+Went to gym to get bigger for rugby
+Fell in love with the gym and being able to do it on my own
+The Art of Learning
