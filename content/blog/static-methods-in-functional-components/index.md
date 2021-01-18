@@ -79,7 +79,7 @@ function Dashboard({ navigation }) {
 // Our static navigationOptions method
 Dashboard.navigationOptions = ({ navigation }) => {
   title: 'My Dashboard'
-  // Again here the navigation prob can be used to get access
+  // Again here the navigation prop can be used to get access
   // to navigation.state.params, etc
 }
 ```
